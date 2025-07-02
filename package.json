@@ -2,14 +2,11 @@
   "name": "arnavguptasite",
   "type": "module",
   "version": "0.0.1",
-  "homepage": "https://arnavgdev.github.io/",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
