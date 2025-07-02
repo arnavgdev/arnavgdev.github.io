@@ -9,7 +9,6 @@ import icon from "astro-icon";
 export default defineConfig({
   output: "static",
 
-  // ← important
   base: "/",
 
   vite: {
@@ -19,7 +18,7 @@ export default defineConfig({
   integrations: [
     icon({
       include: {
-        mdi: ["*"], // This loads all mdi icons
+        mdi: ["*"], 
       },
     }),
   ],
