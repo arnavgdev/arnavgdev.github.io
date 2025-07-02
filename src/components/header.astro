@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<header class="sticky top-0 z-50 bg-black text-white shadow-md">
+  <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Clickable name linking to home page -->
+    <a href="/" class="text-xl font-mono font-bold hover:text-gray-400 transition">
+      Arnav Gupta
+    </a>
+
+    <nav class="flex space-x-6">
+
+      <!-- LinkedIn -->
+      <a
+        href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
+        target="_blank"
+        rel="noopener"
+        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-blue-600 hover:text-white transition"
+      >
+        <Icon name="mdi:linkedin" class="w-5 h-5" />
+        <span class="hidden sm:inline font-semibold">LinkedIn</span>
+      </a>
+
+      <!-- GitHub -->
+      <a
+        href="https://github.com/arnav-gupta-123"
+        target="_blank"
+        rel="noopener"
+        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-gray-400 hover:text-white transition"
+      >
+        <Icon name="mdi:github" class="w-5 h-5" />
+        <span class="hidden sm:inline font-semibold">GitHub</span>
+      </a>
+
+      <!-- Email -->
+      <a
+        href="mailto:arnavg363@gmail.com"
+        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-red-500 hover:text-white transition"
+      >
+        <Icon name="mdi:email-outline" class="w-5 h-5" />
+        <span class="hidden sm:inline font-semibold">Email</span>
+      </a>
+
+      <!-- Resume -->
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener"
+        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-green-600 hover:text-white transition"
+      >
+        <Icon name="mdi:file-document-outline" class="w-5 h-5" />
+        <span class="hidden sm:inline font-semibold">Resume</span>
+      </a>
+
+    </nav>
+  </div>
+</header>

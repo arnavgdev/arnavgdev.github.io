@@ -1,0 +1,14 @@
+---
+const lastUpdated = new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<footer class="bg-black text-white text-center shadow-inner py-4 mt-12">
+  <div class="max-w-3xl mx-auto px-4 flex justify-between items-center text-sm font-mono">
+    <p>&copy; {new Date().getFullYear()} Arnav Gupta. All rights reserved.</p>
+    <p>Last updated {lastUpdated}</p>
+  </div>
+</footer>
