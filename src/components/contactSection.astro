@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<section id="contact" class="mt-8 mb-4 rounded-2xl border border-white/20 bg-black/40 p-6 font-mono text-white sm:p-8">
+  <h2 class="text-2xl font-bold">Contact</h2>
+  <p class="mt-2 text-gray-300">Open to internships, collaborations, and software opportunities.</p>
+
+  <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <a href="mailto:arnavg363@gmail.com" class="rounded-xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10">
+      <p class="flex items-center gap-2 font-semibold">
+        <Icon name="mdi:email-outline" class="h-5 w-5" />
+        Email
+      </p>
+      <p class="mt-1 text-sm text-gray-300">arnavg363@gmail.com</p>
+    </a>
+
+    <a
+      href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
+      target="_blank"
+      rel="noopener"
+      class="rounded-xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10"
+    >
+      <p class="flex items-center gap-2 font-semibold">
+        <Icon name="mdi:linkedin" class="h-5 w-5" />
+        LinkedIn
+      </p>
+      <p class="mt-1 text-sm text-gray-300">Professional network</p>
+    </a>
+
+    <a
+      href="https://github.com/arnav-gupta-123"
+      target="_blank"
+      rel="noopener"
+      class="rounded-xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10"
+    >
+      <p class="flex items-center gap-2 font-semibold">
+        <Icon name="mdi:github" class="h-5 w-5" />
+        GitHub
+      </p>
+      <p class="mt-1 text-sm text-gray-300">Projects and code</p>
+    </a>
+
+    <a
+      href="/resume.pdf"
+      target="_blank"
+      rel="noopener"
+      class="rounded-xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10"
+    >
+      <p class="flex items-center gap-2 font-semibold">
+        <Icon name="mdi:file-document-outline" class="h-5 w-5" />
+        Resume
+      </p>
+      <p class="mt-1 text-sm text-gray-300">Download PDF</p>
+    </a>
+  </div>
+</section>

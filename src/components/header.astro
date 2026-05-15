@@ -2,58 +2,104 @@
 import { Icon } from 'astro-icon/components';
 ---
 
-<header class="sticky top-0 z-50 bg-black text-white shadow-md">
-  <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+<header class="sticky top-0 z-50 bg-black text-white font-mono shadow-md">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
 
     <!-- Clickable name linking to home page -->
-    <a href="/" class="text-xl font-mono font-bold hover:text-gray-400 transition">
+    <a href="/" class="text-xl font-mono font-bold transition">
       Arnav Gupta
     </a>
 
-    <nav class="flex space-x-6">
+    <div class="flex flex-wrap items-center justify-end gap-3">
+      <nav class="whitespace-nowrap text-sm sm:text-base font-semibold text-gray-200">
+        <a href="#about" class="header-nav-link">About</a>
+        <span class="mx-2 text-gray-500">|</span>
+        <a href="#experience" class="header-nav-link">Experience</a>
+        <span class="mx-2 text-gray-500">|</span>
+        <a href="#research" class="header-nav-link">Research</a>
+        <span class="mx-2 text-gray-500">|</span>
+        <a href="#projects" class="header-nav-link">Projects</a>
+        <span class="mx-2 text-gray-500">|</span>
+        <a href="#academic" class="header-nav-link">Academic</a>
+        <span class="mx-2 text-gray-500">|</span>
+        <a href="#contact" class="header-nav-link">Contact</a>
+      </nav>
 
-      <!-- LinkedIn -->
-      <a
-        href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
-        target="_blank"
-        rel="noopener"
-        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-blue-600 hover:text-white transition"
-      >
-        <Icon name="mdi:linkedin" class="w-5 h-5" />
-        <span class="hidden sm:inline font-semibold">LinkedIn</span>
-      </a>
+      <nav class="flex items-center gap-2">
+        <a
+          href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
+          target="_blank"
+          rel="noopener"
+          class="header-icon-button"
+          aria-label="LinkedIn"
+          title="LinkedIn"
+        >
+          <Icon name="mdi:linkedin" class="w-5 h-5" />
+        </a>
 
-      <!-- GitHub -->
-      <a
-        href="https://github.com/arnav-gupta-123"
-        target="_blank"
-        rel="noopener"
-        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-gray-400 hover:text-white transition"
-      >
-        <Icon name="mdi:github" class="w-5 h-5" />
-        <span class="hidden sm:inline font-semibold">GitHub</span>
-      </a>
+        <a
+          href="https://github.com/arnav-gupta-123"
+          target="_blank"
+          rel="noopener"
+          class="header-icon-button"
+          aria-label="GitHub"
+          title="GitHub"
+        >
+          <Icon name="mdi:github" class="w-5 h-5" />
+        </a>
 
-      <!-- Email -->
-      <a
-        href="mailto:arnavg363@gmail.com"
-        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-red-500 hover:text-white transition"
-      >
-        <Icon name="mdi:email-outline" class="w-5 h-5" />
-        <span class="hidden sm:inline font-semibold">Email</span>
-      </a>
+        <a
+          href="mailto:arnavg363@gmail.com"
+          class="header-icon-button"
+          aria-label="Email"
+          title="Email"
+        >
+          <Icon name="mdi:email-outline" class="w-5 h-5" />
+        </a>
 
-      <!-- Resume -->
-      <a
-        href="/resume.pdf"
-        target="_blank"
-        rel="noopener"
-        class="flex items-center gap-2 border border-gray-400 rounded-md px-1 py-1 hover:bg-green-600 hover:text-white transition"
-      >
-        <Icon name="mdi:file-document-outline" class="w-5 h-5" />
-        <span class="hidden sm:inline font-semibold">Resume</span>
-      </a>
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener"
+          class="header-icon-button"
+          aria-label="Resume"
+          title="Resume"
+        >
+          <Icon name="mdi:file-document-outline" class="w-5 h-5" />
+        </a>
 
-    </nav>
+        <button
+          id="themeToggleButton"
+          type="button"
+          class="header-icon-button"
+          aria-label="Toggle color theme"
+          title="Toggle color theme"
+        >
+          <Icon name="mdi:theme-light-dark" class="w-5 h-5" />
+        </button>
+      </nav>
+    </div>
   </div>
+
+  <script is:inline>
+    (() => {
+      const button = document.getElementById('themeToggleButton');
+
+      if (!(button instanceof HTMLButtonElement)) return;
+
+      const updateLabel = () => {
+        const currentTheme = window.siteTheme?.getTheme?.() ?? 'dark';
+        const action = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        button.setAttribute('aria-label', action);
+        button.setAttribute('title', action);
+      };
+
+      button.addEventListener('click', () => {
+        window.siteTheme?.toggleTheme?.();
+      });
+
+      window.addEventListener('theme:change', updateLabel);
+      updateLabel();
+    })();
+  </script>
 </header>

@@ -1,0 +1,110 @@
+<section id="about" class="mt-8 rounded-2xl border border-white/20 bg-black/40 p-6 font-mono text-white sm:p-8">
+  <div class="grid gap-6 md:grid-cols-[260px_1fr] md:items-stretch">
+    <div class="mx-auto w-full max-w-[260px] md:h-full">
+      <img
+        src="/profile-picture.jpeg"
+        alt="Arnav Gupta profile picture"
+        class="h-full min-h-[18rem] w-full rounded-2xl object-cover ring-4 ring-white/20 shadow-xl md:min-h-0"
+      />
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-bold text-gray-100">About</h2>
+      <h1 class="mt-1 text-3xl font-bold">Arnav Gupta</h1>
+      <p class="mt-3 text-lg text-gray-200">
+        <span id="aboutTypingText" aria-live="polite"></span><span class="typing-cursor" aria-hidden="true">|</span>
+      </p>
+      <p class="mt-4 leading-7 text-gray-200">
+        I am an electrical & computer engineering and computer science student at Duke University with a strong interest in applied machine learning.
+        I have experience working with EEG data, deep learning models like EEGNet, and large-scale research datasets.
+        I enjoy building projects that combine technical depth with real-world impact.
+        Currently, I am seeking opportunities to apply my skills in data science and AI-driven research.
+        I would love to connect on
+        <a
+          href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
+          target="_blank"
+          rel="noopener"
+          class="text-blue-400 underline transition hover:opacity-80"
+        >
+          LinkedIn</a> or through
+        <a
+          href="mailto:arnavg363@gmail.com"
+          class="text-blue-400 underline transition hover:opacity-80"
+        >
+          email</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const typingTarget = document.getElementById('aboutTypingText');
+    if (!(typingTarget instanceof HTMLElement)) return;
+
+    const words = [
+      'Researcher',
+      'Builder',
+      'Engineer',
+      'Problem Solver',
+      'Innovator',
+      'Learner',
+      'Analyst',
+      'Developer',
+      'Experimenter',
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    const typeStep = () => {
+      const currentWord = words[wordIndex];
+
+      if (!deleting) {
+        charIndex += 1;
+        typingTarget.textContent = currentWord.slice(0, charIndex);
+
+        if (charIndex === currentWord.length) {
+          deleting = true;
+          window.setTimeout(typeStep, 900);
+          return;
+        }
+
+        window.setTimeout(typeStep, 90);
+        return;
+      }
+
+      charIndex -= 1;
+      typingTarget.textContent = currentWord.slice(0, charIndex);
+
+      if (charIndex === 0) {
+        deleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        window.setTimeout(typeStep, 250);
+        return;
+      }
+
+      window.setTimeout(typeStep, 45);
+    };
+
+    typeStep();
+  })();
+</script>
+
+<style>
+  .typing-cursor {
+    animation: blink 1s steps(1, end) infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

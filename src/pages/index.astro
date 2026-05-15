@@ -2,6 +2,12 @@
 import '../styles/global.css';
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
+import AboutSection from '../components/aboutSection.astro';
+import ExperienceSection from '../components/experienceSection.astro';
+import ResearchSection from '../components/researchSection.astro';
+import ProjectsSection from '../components/projectsSection.astro';
+import VolunteeringSection from '../components/volunteeringSection.astro';
+import ContactSection from '../components/contactSection.astro';
 ---
 
 <html lang="en" class="h-full">
@@ -10,16 +16,80 @@ import Footer from '../components/footer.astro';
     <meta name="description" content="Arnav Gupta's Website" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="arnavgdev.github.io" />
+    <script is:inline>
+      (() => {
+        const storageKey = 'theme-preference';
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const root = document.documentElement;
+
+        const getStoredPreference = () => localStorage.getItem(storageKey);
+        const getSystemTheme = () => (mediaQuery.matches ? 'dark' : 'light');
+
+        const applyTheme = (theme) => {
+          root.classList.remove('theme-light', 'theme-dark');
+          root.classList.add(`theme-${theme}`);
+          root.dataset.theme = theme;
+        };
+
+        const resolveTheme = () => {
+          const stored = getStoredPreference();
+          return stored === 'light' || stored === 'dark' ? stored : getSystemTheme();
+        };
+
+        const setPreference = (preference) => {
+          if (preference === 'light' || preference === 'dark') {
+            localStorage.setItem(storageKey, preference);
+          } else {
+            localStorage.removeItem(storageKey);
+          }
+          const theme = resolveTheme();
+          applyTheme(theme);
+          window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme } }));
+        };
+
+        applyTheme(resolveTheme());
+
+        const onSystemThemeChange = () => {
+          if (!getStoredPreference()) {
+            const theme = resolveTheme();
+            applyTheme(theme);
+            window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme } }));
+          }
+        };
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', onSystemThemeChange);
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(onSystemThemeChange);
+        }
+
+        window.siteTheme = {
+          getTheme: () => root.dataset.theme || resolveTheme(),
+          getPreference: () => getStoredPreference() ?? 'system',
+          setPreference,
+          toggleTheme: () => {
+            const nextTheme = (root.dataset.theme || resolveTheme()) === 'dark' ? 'light' : 'dark';
+            setPreference(nextTheme);
+          },
+        };
+      })();
+    </script>
   </head>
 
-  <body class="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 min-h-screen flex flex-col text-black">
+  <body class="relative min-h-screen flex flex-col text-black">
+
+    <!-- Background grid overlay -->
+    <div aria-hidden="true" class="site-background fixed inset-0 -z-10"></div>
 
     <Header class="z-50" />
 
-    <main class="max-w-3xl mx-auto p-6 flex-grow">
-      <!-- Your repeated content here -->
-      <h1 class="text-2xl text-center font-mono font-bold">Hi, I'm Arnav! Welcome to my website...</h1>
-      <!-- ...repeat as needed -->
+    <main class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow bg-transparent">
+      <AboutSection />
+      <ExperienceSection />
+      <ResearchSection />
+      <ProjectsSection />
+      <VolunteeringSection />
+      <ContactSection />
     </main>
 
     <Footer class="z-50" />
