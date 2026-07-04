@@ -1,3 +1,7 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
 <section id="about" class="mt-8 rounded-2xl border border-white/20 bg-black/40 p-6 font-mono text-white sm:p-8">
   <div class="grid gap-6 md:grid-cols-[260px_1fr] md:items-stretch">
     <div class="mx-auto w-full max-w-[260px] md:h-full">
@@ -18,17 +22,25 @@
         I have experience working with EEG data, deep learning models like EEGNet, and large-scale research datasets.
         I enjoy building projects that combine technical depth with real-world impact.
         Currently, I am seeking opportunities to apply my skills in data science and AI-driven research.
-        I would love to connect on <a 
-          href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
-          target="_blank"
-          rel="noopener"
-          class="text-blue-400 underline transition hover:opacity-80"
-        >LinkedIn</a> or through <a
-          href="mailto:arnavg363@gmail.com"
-          class="text-blue-400 underline transition hover:opacity-80"
-        >
-          email</a>.
       </p>
+
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <a href="https://www.linkedin.com/in/arnavgdev" target="_blank" rel="noopener" class="header-icon-button" title="LinkedIn">
+          <Icon name="mdi:linkedin" class="w-5 h-5" />
+        </a>
+
+        <a href="https://github.com/arnav-gupta-123" target="_blank" rel="noopener" class="header-icon-button" title="GitHub">
+          <Icon name="mdi:github" class="w-5 h-5" />
+        </a>
+
+        <a href="mailto:arnavg363@gmail.com" class="header-icon-button" title="Email">
+          <Icon name="mdi:email-outline" class="w-5 h-5" />
+        </a>
+
+        <a href="/resume.pdf" target="_blank" rel="noopener" class="header-icon-button" title="Resume">
+          <Icon name="mdi:file-document-outline" class="w-5 h-5" />
+        </a>
+      </div>
     </div>
   </div>
 </section>

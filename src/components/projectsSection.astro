@@ -1,44 +1,18 @@
 <section id="projects" class="mt-8 rounded-2xl border border-white/20 bg-black/40 p-6 font-mono text-white sm:p-8">
   <h2 class="text-2xl font-bold">Projects</h2>
 
-  <div class="mt-5 space-y-4">
-    <article class="rounded-xl border border-white/15 bg-white/5 p-4">
-      <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-        <h3 class="text-lg font-semibold">Computer Vision Defect Detection System</h3>
-        <span class="text-xs text-gray-300">Industrial ML</span>
-      </div>
-      <ul class="mt-3 list-disc space-y-1 pl-5 text-gray-200">
-        <li>Designed an end-to-end defect detection pipeline.</li>
-        <li>Used OpenCV and ML models for classification.</li>
-        <li>Handled multi-class defect scenarios.</li>
-        <li>Reduced defects by 90% in production systems.</li>
-      </ul>
-    </article>
+  <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- Small project card previews for homepage -->
+    <a href="/projects/dcs-linkstream" class="block rounded-xl border border-white/15 bg-white/5 p-4 hover:shadow-lg transition">
+      <div class="text-xs text-gray-300">Mobile Data Systems</div>
+      <h3 class="mt-1 font-semibold">DCS LinkStream 2.0</h3>
+      <p class="mt-2 text-sm text-gray-200">Android-based field data collection and offline-first sync architecture.</p>
+    </a>
 
-    <article class="rounded-xl border border-white/15 bg-white/5 p-4">
-      <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-        <h3 class="text-lg font-semibold">DCS LinkStream 2.0</h3>
-        <span class="text-xs text-gray-300">Mobile Data Systems</span>
-      </div>
-      <ul class="mt-3 list-disc space-y-1 pl-5 text-gray-200">
-        <li>Built an Android-based data collection and syncing system.</li>
-        <li>Integrated heterogeneous sensor inputs.</li>
-        <li>Designed an offline-first architecture for field reliability.</li>
-        <li>Used in real-world environmental deployments.</li>
-      </ul>
-    </article>
-
-    <article class="rounded-xl border border-white/15 bg-white/5 p-4">
-      <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-        <h3 class="text-lg font-semibold">SSD Analytics Dashboard</h3>
-        <span class="text-xs text-gray-300">Data Platform</span>
-      </div>
-      <ul class="mt-3 list-disc space-y-1 pl-5 text-gray-200">
-        <li>Built a system to process and visualize large-scale SSD testing logs.</li>
-        <li>Parsed 1,000+ JSON files into structured datasets.</li>
-        <li>Developed a Flask dashboard for real-time analytics.</li>
-        <li>Implemented anomaly detection for hardware testing workflows.</li>
-      </ul>
-    </article>
+    <a href="/projects/cv-defect-detection" class="block rounded-xl border border-white/15 bg-white/5 p-4 hover:shadow-lg transition">
+      <div class="text-xs text-gray-300">Industrial ML</div>
+      <h3 class="mt-1 font-semibold">Computer Vision Defect Detection</h3>
+      <p class="mt-2 text-sm text-gray-200">End-to-end defect detection using OpenCV and ML models.</p>
+    </a>
   </div>
 </section>

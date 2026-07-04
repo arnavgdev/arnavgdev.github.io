@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import Header from '../../components/header.astro';
+import Footer from '../../components/footer.astro';
+import projects from '../../data/projects.json';
+import siteLogo from '../../assets/site-logo.png';
+
+const { slug } = Astro.params;
+const project = projects.find((p) => p.slug === slug);
+---
+
+<html lang="en">
+  <head>
+    <title>{project ? `${project.title} — Arnav Gupta` : 'Project Not Found'}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href={siteLogo} />
+  </head>
+  <body class="min-h-screen">
+    <Header />
+    <main class="max-w-5xl mx-auto px-4 py-10">
+      {project ? (
+        <article>
+          <h1 class="text-3xl font-bold">{project.title}</h1>
+          <div class="mt-2 text-sm text-gray-400">{project.category}</div>
+          <div class="mt-6">
+            <img src={project.cover} alt={project.title} class="w-full rounded" />
+          </div>
+          <div class="mt-6 prose prose-invert text-gray-200">{project.content}</div>
+        </article>
+      ) : (
+        <div>
+          <h1 class="text-2xl font-bold">Project not found</h1>
+          <p class="mt-4 text-gray-400">Check the projects index to view available case studies.</p>
+        </div>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>

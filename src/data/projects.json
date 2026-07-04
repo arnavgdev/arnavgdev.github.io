@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "dcs-linkstream",
+    "title": "DCS LinkStream 2.0",
+    "category": "Mobile Data Systems",
+    "summary": "Android-based field data collection and offline-first sync architecture.",
+    "cover": "/logos/dcs-linkstream.png",
+    "content": "Built an Android app to collect environmental sensor data with offline-first sync. Designed robust ingestion pipelines and reduced field data loss."
+  },
+  {
+    "slug": "cv-defect-detection",
+    "title": "Computer Vision Defect Detection",
+    "category": "Industrial ML",
+    "summary": "End-to-end defect detection using OpenCV and ML models.",
+    "cover": "/logos/cv-defect.png",
+    "content": "Developed pipelines for preprocessing, model training, and deployment to reduce production defects."
+  }
+]

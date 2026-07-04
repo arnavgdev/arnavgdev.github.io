@@ -1,105 +1,89 @@
 ---
 import { Icon } from 'astro-icon/components';
+import siteLogo from '../assets/site-logo.png';
 ---
 
 <header class="sticky top-0 z-50 bg-black text-white font-mono shadow-md">
   <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
 
     <!-- Clickable name linking to home page -->
-    <a href="/" class="text-xl font-mono font-bold transition">
+    <a href="/" class="text-xl font-mono font-bold transition flex items-center gap-3">
+      <span class="logo-slot" aria-hidden="true">
+        <img src={siteLogo} alt="site logo" class="logo-slot-image" />
+      </span>
       Arnav Gupta
     </a>
 
-    <div class="flex flex-wrap items-center justify-end gap-3">
-      <nav class="whitespace-nowrap text-sm sm:text-base font-semibold text-gray-200">
-        <a href="#about" class="header-nav-link">About</a>
-        <span class="mx-2 text-gray-500">|</span>
-        <a href="#experience" class="header-nav-link">Experience</a>
-        <span class="mx-2 text-gray-500">|</span>
-        <a href="#research" class="header-nav-link">Research</a>
-        <span class="mx-2 text-gray-500">|</span>
-        <a href="#projects" class="header-nav-link">Projects</a>
-        <span class="mx-2 text-gray-500">|</span>
-        <a href="#academic" class="header-nav-link">Academic</a>
-        <span class="mx-2 text-gray-500">|</span>
-        <a href="#contact" class="header-nav-link">Contact</a>
-      </nav>
-
-      <nav class="flex items-center gap-2">
-        <a
-          href="https://www.linkedin.com/in/arnav-gupta-09884a22b"
-          target="_blank"
-          rel="noopener"
-          class="header-icon-button"
-          aria-label="LinkedIn"
-          title="LinkedIn"
-        >
-          <Icon name="mdi:linkedin" class="w-5 h-5" />
-        </a>
-
-        <a
-          href="https://github.com/arnav-gupta-123"
-          target="_blank"
-          rel="noopener"
-          class="header-icon-button"
-          aria-label="GitHub"
-          title="GitHub"
-        >
-          <Icon name="mdi:github" class="w-5 h-5" />
-        </a>
-
-        <a
-          href="mailto:arnavg363@gmail.com"
-          class="header-icon-button"
-          aria-label="Email"
-          title="Email"
-        >
-          <Icon name="mdi:email-outline" class="w-5 h-5" />
-        </a>
-
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noopener"
-          class="header-icon-button"
-          aria-label="Resume"
-          title="Resume"
-        >
-          <Icon name="mdi:file-document-outline" class="w-5 h-5" />
-        </a>
-
-        <button
-          id="themeToggleButton"
-          type="button"
-          class="header-icon-button"
-          aria-label="Toggle color theme"
-          title="Toggle color theme"
-        >
-          <Icon name="mdi:theme-light-dark" class="w-5 h-5" />
-        </button>
-      </nav>
+    <!-- Compact hamburger and theme toggle on the right -->
+    <div class="flex items-center gap-3">
+      <button id="themeToggleButton" type="button" class="header-icon-button" aria-label="Toggle color theme" title="Toggle color theme">
+        <Icon name="mdi:theme-light-dark" class="w-5 h-5" />
+      </button>
+      <button id="navToggleButton" class="header-icon-button" aria-label="Open menu" title="Menu">
+        <Icon name="mdi:menu" class="w-5 h-5" />
+      </button>
     </div>
   </div>
 
+  <!-- Slide-out drawer -->
+  <div id="navDrawerOverlay" class="hidden fixed inset-0 z-40 bg-black/40" aria-hidden="true"></div>
+  <aside id="navDrawer" class="fixed right-0 top-0 z-50 h-full w-80 max-w-[90vw] transform translate-x-full bg-black text-white shadow-2xl transition-transform duration-300">
+    <div class="p-6">
+      <div class="flex items-center justify-between">
+        <a href="/" class="text-lg font-bold">Arnav Gupta</a>
+        <button id="navCloseButton" class="header-icon-button" aria-label="Close menu" title="Close">
+          <Icon name="mdi:close" class="w-5 h-5" />
+        </button>
+      </div>
+
+      <nav class="mt-6 flex flex-col gap-3 text-lg">
+        <a href="/" class="header-nav-link">About</a>
+        <a href="/experience" class="header-nav-link">Experience</a>
+        <a href="/projects" class="header-nav-link">Projects</a>
+        <a href="/teaching" class="header-nav-link">Teaching</a>
+        <a href="/research" class="header-nav-link">Research</a>
+        <a href="/contact" class="header-nav-link">Contact</a>
+      </nav>
+
+    </div>
+  </aside>
+
   <script is:inline>
     (() => {
-      const button = document.getElementById('themeToggleButton');
-
-      if (!(button instanceof HTMLButtonElement)) return;
-
-      const updateLabel = () => {
-        const currentTheme = window.siteTheme?.getTheme?.() ?? 'dark';
-        const action = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-        button.setAttribute('aria-label', action);
-        button.setAttribute('title', action);
+      const openDrawer = () => {
+        document.getElementById('navDrawer')?.classList.remove('translate-x-full');
+        document.getElementById('navDrawerOverlay')?.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
       };
 
-      button.addEventListener('click', () => {
-        window.siteTheme?.toggleTheme?.();
-      });
+      const closeDrawer = () => {
+        document.getElementById('navDrawer')?.classList.add('translate-x-full');
+        document.getElementById('navDrawerOverlay')?.classList.add('hidden');
+        document.body.style.overflow = '';
+      };
 
-      window.addEventListener('theme:change', updateLabel);
-      updateLabel();
+      const toggleButton = document.getElementById('navToggleButton');
+      const closeButton = document.getElementById('navCloseButton');
+      const overlay = document.getElementById('navDrawerOverlay');
+
+      toggleButton?.addEventListener('click', openDrawer);
+      closeButton?.addEventListener('click', closeDrawer);
+      overlay?.addEventListener('click', closeDrawer);
+
+      // theme toggle
+      const themeButton = document.getElementById('themeToggleButton');
+      if (themeButton instanceof HTMLElement) {
+        const updateLabel = () => {
+          const currentTheme = window.siteTheme?.getTheme?.() ?? 'dark';
+          const action = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+          themeButton.setAttribute('aria-label', action);
+          themeButton.setAttribute('title', action);
+        };
+
+        themeButton.addEventListener('click', () => window.siteTheme?.toggleTheme?.());
+        window.addEventListener('theme:change', updateLabel);
+        updateLabel();
+      }
     })();
   </script>
 </header>
