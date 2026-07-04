@@ -67,10 +67,17 @@ article[id] {
   margin-bottom: 1.25rem;
 }
 
-.splash-logo {
-  font-size: 1rem;
-  letter-spacing: 0.15em;
-  color: #00ff88;
+.splash-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.35rem;
+}
+
+.splash-subtitle {
+  color: #8cff9c;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
 }
 
 .splash-lines {

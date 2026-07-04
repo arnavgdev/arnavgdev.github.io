@@ -1,7 +1,8 @@
 <section id="splash-screen" class="splash-screen" aria-hidden="false">
   <div class="splash-content">
     <div class="splash-header">
-      <pre class="splash-logo">Arnav Gupta Portfolio</pre>
+      <div class="splash-title">Arnav Gupta</div>
+      <div class="splash-subtitle">Loading portfolio environment</div>
     </div>
     <div id="splash-lines" class="splash-lines" aria-live="polite"></div>
     <div id="splash-progress" class="splash-progress"></div>
@@ -15,20 +16,13 @@
       if (!splash || !linesEl || !progressEl) return;
 
       const bootLines = [
-        'Initializing portfolio boot sequence...',
-        'Authenticating vault...',
-        'Loading experience matrix...',
-        'Mapping research archives...',
-        'Spawning project nodes...',
-        'Syncing teaching modules...',
-        'Optimizing hacker aesthetic...',
-        'Starting interface...',
+        'Initialising secure session...',
+        'Loading content modules...',
+        'Synchronizing research assets...',
+        'Applying visual theme...',
+        'Verifying project metadata...',
+        'Optimizing page rendering...',
       ];
-
-      const randomText = () => {
-        const chars = '0101ABCDEF<>/\\|{}[]!@#$%^&*';
-        return Array.from({ length: 40 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-      };
 
       const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
       const addLine = (text, cls = '') => {
@@ -40,12 +34,14 @@
         return line;
       };
 
-      const fillProgress = async (label, duration = 800) => {
+      const fillProgress = async (label, duration = 700) => {
         const row = document.createElement('div');
         row.className = 'splash-progress-row';
         row.innerHTML = `
-          <span class="splash-progress-label">${label}</span>
-          <span class="splash-progress-value" id="${label.replace(/\s+/g, '-')}-value">0%</span>
+          <div class="splash-progress-header">
+            <span class="splash-progress-label">${label}</span>
+            <span class="splash-progress-value" id="${label.replace(/\s+/g, '-')}-value">0%</span>
+          </div>
           <div class="splash-progress-bar"><div class="splash-progress-fill" id="${label.replace(/\s+/g, '-')}-fill"></div></div>
         `;
         progressEl.appendChild(row);
@@ -72,46 +68,33 @@
       };
 
       const run = async () => {
+        addLine('> BOOT SEQUENCE STARTED', 'accent');
+        await wait(120);
+
         for (const text of bootLines) {
           addLine(`> ${text}`);
-          await wait(200 + Math.random() * 120);
+          await wait(220);
         }
 
-        addLine('> Boot splash sequence loaded.', 'accent');
-        await wait(200);
-
         const steps = [
-          { label: 'Encrypting memory cache', duration: 620 },
-          { label: 'Compiling green text engine', duration: 720 },
-          { label: 'Mounting portfolio pages', duration: 780 },
+          { label: 'Engine initialization', duration: 600 },
+          { label: 'Asset loading', duration: 750 },
+          { label: 'Interface launch', duration: 650 },
         ];
 
         for (const step of steps) {
           await fillProgress(step.label, step.duration);
-          await wait(100);
+          await wait(120);
         }
 
-        addLine('> SYSTEM READY — loading interface...', 'accent');
-        await wait(500);
+        addLine('> PORTFOLIO READY', 'accent');
+        await wait(340);
+
         splash.classList.add('splash-hidden');
-        setTimeout(() => {
-          splash.remove();
-        }, 300);
+        setTimeout(() => splash.remove(), 300);
       };
 
-      const shuffle = () => {
-        const block = document.createElement('div');
-        block.className = 'splash-shuffle';
-        block.textContent = randomText();
-        linesEl.appendChild(block);
-        linesEl.scrollTop = linesEl.scrollHeight;
-        if (linesEl.children.length > 22) {
-          linesEl.removeChild(linesEl.firstChild);
-        }
-      };
-
-      const interval = setInterval(shuffle, 180);
-      run().then(() => clearInterval(interval));
+      run();
     })();
   </script>
 </section>

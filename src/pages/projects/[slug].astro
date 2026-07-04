@@ -1,9 +1,12 @@
 ---
-import '../styles/global.css';
+import '../../styles/global.css';
 import Header from '../../components/header.astro';
 import Footer from '../../components/footer.astro';
 import projects from '../../data/projects.json';
-import siteLogo from '../../assets/site-logo.png';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug } }));
+}
 
 const { slug } = Astro.params;
 const project = projects.find((p) => p.slug === slug);
@@ -13,7 +16,7 @@ const project = projects.find((p) => p.slug === slug);
   <head>
     <title>{project ? `${project.title} — Arnav Gupta` : 'Project Not Found'}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href={siteLogo} />
+    <link rel="icon" href="/favicon.svg" />
   </head>
   <body class="min-h-screen">
     <Header />
