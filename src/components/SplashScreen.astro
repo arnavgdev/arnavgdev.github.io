@@ -1,27 +1,43 @@
 <section id="splash-screen" class="splash-screen" aria-hidden="false">
-  <div class="splash-content">
-    <div class="splash-header">
-      <div class="splash-title">Arnav Gupta</div>
-      <div class="splash-subtitle">Loading portfolio environment</div>
+  <div class="splash-terminal-window">
+    <div class="splash-terminal-titlebar">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot amber"></div>
+      <div class="terminal-dot green"></div>
+      <div class="terminal-title">portfolio-boot</div>
     </div>
+
     <div id="splash-lines" class="splash-lines" aria-live="polite"></div>
-    <div id="splash-progress" class="splash-progress"></div>
+
+    <div class="splash-progress-bar-shell">
+      <div class="splash-progress-status" id="splash-progress-status">Starting boot...</div>
+      <div class="splash-progress-track">
+        <div class="splash-progress-fill" id="splash-progress-fill"></div>
+      </div>
+      <div class="splash-progress-value" id="splash-progress-label">0%</div>
+    </div>
   </div>
 
   <script is:inline>
     (() => {
       const splash = document.getElementById('splash-screen');
       const linesEl = document.getElementById('splash-lines');
-      const progressEl = document.getElementById('splash-progress');
-      if (!splash || !linesEl || !progressEl) return;
+      const fillEl = document.getElementById('splash-progress-fill');
+      const statusEl = document.getElementById('splash-progress-status');
+      const labelEl = document.getElementById('splash-progress-label');
+      if (!splash || !linesEl || !fillEl || !statusEl || !labelEl) return;
 
       const bootLines = [
-        'Initialising secure session...',
-        'Loading content modules...',
-        'Synchronizing research assets...',
-        'Applying visual theme...',
-        'Verifying project metadata...',
-        'Optimizing page rendering...',
+        '> booting portfolio kernel...',
+        '> mounting experience modules...',
+        '> loading interface assets...',
+        '> initializing terminal output...',
+      ];
+
+      const statusMessages = [
+        'system diagnostics',
+        'content streams',
+        'finalizing boot',
       ];
 
       const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -34,30 +50,15 @@
         return line;
       };
 
-      const fillProgress = async (label, duration = 700) => {
-        const row = document.createElement('div');
-        row.className = 'splash-progress-row';
-        row.innerHTML = `
-          <div class="splash-progress-header">
-            <span class="splash-progress-label">${label}</span>
-            <span class="splash-progress-value" id="${label.replace(/\s+/g, '-')}-value">0%</span>
-          </div>
-          <div class="splash-progress-bar"><div class="splash-progress-fill" id="${label.replace(/\s+/g, '-')}-fill"></div></div>
-        `;
-        progressEl.appendChild(row);
-
-        const fill = row.querySelector('.splash-progress-fill');
-        const value = row.querySelector('.splash-progress-value');
-        if (!fill || !value) return;
-
+      const progress = async (target, duration) => {
         const start = performance.now();
         return new Promise((resolve) => {
           const animate = (now) => {
             const elapsed = now - start;
             const pct = Math.min(100, Math.round((elapsed / duration) * 100));
-            fill.style.width = `${pct}%`;
-            value.textContent = `${pct}%`;
-            if (pct < 100) {
+            fillEl.style.width = `${pct}%`;
+            labelEl.textContent = `${pct}%`;
+            if (pct < target) {
               requestAnimationFrame(animate);
             } else {
               resolve();
@@ -67,31 +68,35 @@
         });
       };
 
-      const run = async () => {
-        addLine('> BOOT SEQUENCE STARTED', 'accent');
-        await wait(120);
-
-        for (const text of bootLines) {
-          addLine(`> ${text}`);
-          await wait(220);
-        }
-
-        const steps = [
-          { label: 'Engine initialization', duration: 600 },
-          { label: 'Asset loading', duration: 750 },
-          { label: 'Interface launch', duration: 650 },
-        ];
-
-        for (const step of steps) {
-          await fillProgress(step.label, step.duration);
-          await wait(120);
-        }
-
-        addLine('> PORTFOLIO READY', 'accent');
-        await wait(340);
-
+      const finish = () => {
         splash.classList.add('splash-hidden');
-        setTimeout(() => splash.remove(), 300);
+        setTimeout(() => splash.remove(), 160);
+      };
+
+      const skip = () => {
+        finish();
+      };
+
+      document.addEventListener('keydown', skip, { once: true });
+      document.addEventListener('click', skip, { once: true });
+      document.addEventListener('touchstart', skip, { once: true });
+
+      const run = async () => {
+        for (const text of bootLines) {
+          addLine(text);
+          await wait(60);
+        }
+
+        for (let i = 0; i < statusMessages.length; i += 1) {
+          statusEl.textContent = `loading ${statusMessages[i]}...`;
+          const target = Math.round(((i + 1) / statusMessages.length) * 100);
+          await progress(target, 160);
+        }
+
+        statusEl.textContent = 'boot complete';
+        await progress(100, 100);
+        await wait(80);
+        finish();
       };
 
       run();

@@ -19,64 +19,6 @@ import SplashScreen from '../components/SplashScreen.astro';
     <link rel="canonical" href="arnavgdev.github.io" />
     <link rel="icon" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
-    <script is:inline>
-      (() => {
-        const storageKey = 'theme-preference';
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const root = document.documentElement;
-
-        const getStoredPreference = () => localStorage.getItem(storageKey);
-        const getSystemTheme = () => (mediaQuery.matches ? 'dark' : 'light');
-
-        const applyTheme = (theme) => {
-          root.classList.remove('theme-light', 'theme-dark');
-          root.classList.add(`theme-${theme}`);
-          root.dataset.theme = theme;
-        };
-
-        const resolveTheme = () => {
-          const stored = getStoredPreference();
-          return stored === 'light' || stored === 'dark' ? stored : getSystemTheme();
-        };
-
-        const setPreference = (preference) => {
-          if (preference === 'light' || preference === 'dark') {
-            localStorage.setItem(storageKey, preference);
-          } else {
-            localStorage.removeItem(storageKey);
-          }
-          const theme = resolveTheme();
-          applyTheme(theme);
-          window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme } }));
-        };
-
-        applyTheme(resolveTheme());
-
-        const onSystemThemeChange = () => {
-          if (!getStoredPreference()) {
-            const theme = resolveTheme();
-            applyTheme(theme);
-            window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme } }));
-          }
-        };
-
-        if (typeof mediaQuery.addEventListener === 'function') {
-          mediaQuery.addEventListener('change', onSystemThemeChange);
-        } else if (typeof mediaQuery.addListener === 'function') {
-          mediaQuery.addListener(onSystemThemeChange);
-        }
-
-        window.siteTheme = {
-          getTheme: () => root.dataset.theme || resolveTheme(),
-          getPreference: () => getStoredPreference() ?? 'system',
-          setPreference,
-          toggleTheme: () => {
-            const nextTheme = (root.dataset.theme || resolveTheme()) === 'dark' ? 'light' : 'dark';
-            setPreference(nextTheme);
-          },
-        };
-      })();
-    </script>
   </head>
 
   <body class="relative min-h-screen flex flex-col text-black">

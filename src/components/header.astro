@@ -18,8 +18,10 @@ import siteLogo from '../assets/site-logo.png';
 
     <!-- Compact hamburger and theme toggle on the right -->
     <div class="flex items-center gap-3">
-      <button id="themeToggleButton" type="button" class="header-icon-button" aria-label="Toggle color theme" title="Toggle color theme">
-        <Icon name="mdi:theme-light-dark" class="w-5 h-5" />
+      <button id="themeToggleButton" type="button" class="header-icon-button theme-toggle-button" aria-label="Toggle color theme" title="Toggle color theme">
+        <span class="theme-icon theme-icon-system"><Icon name="mdi:theme-light-dark" class="w-5 h-5" /></span>
+        <span class="theme-icon theme-icon-light hidden"><Icon name="mdi:weather-sunny" class="w-5 h-5" /></span>
+        <span class="theme-icon theme-icon-dark hidden"><Icon name="mdi:weather-night" class="w-5 h-5" /></span>
       </button>
       <button id="navToggleButton" class="header-icon-button" aria-label="Open menu" title="Menu">
         <Icon name="mdi:menu" class="w-5 h-5" />
@@ -72,19 +74,93 @@ import siteLogo from '../assets/site-logo.png';
       closeButton?.addEventListener('click', closeDrawer);
       overlay?.addEventListener('click', closeDrawer);
 
-      // theme toggle
+      const storageKey = 'theme-preference';
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const root = document.documentElement;
+      const systemIcon = document.querySelector('.theme-icon-system');
+      const lightIcon = document.querySelector('.theme-icon-light');
+      const darkIcon = document.querySelector('.theme-icon-dark');
       const themeButton = document.getElementById('themeToggleButton');
-      if (themeButton instanceof HTMLElement) {
-        const updateLabel = () => {
-          const currentTheme = window.siteTheme?.getTheme?.() ?? 'dark';
-          const action = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-          themeButton.setAttribute('aria-label', action);
-          themeButton.setAttribute('title', action);
-        };
 
-        themeButton.addEventListener('click', () => window.siteTheme?.toggleTheme?.());
-        window.addEventListener('theme:change', updateLabel);
-        updateLabel();
+      const getStoredPreference = () => localStorage.getItem(storageKey);
+      const getSystemTheme = () => (mediaQuery.matches ? 'dark' : 'light');
+      const resolveTheme = () => {
+        const stored = getStoredPreference();
+        return stored === 'light' || stored === 'dark' ? stored : getSystemTheme();
+      };
+
+      const applyTheme = (theme) => {
+        root.classList.remove('theme-light', 'theme-dark');
+        root.classList.add(`theme-${theme}`);
+        root.dataset.theme = theme;
+      };
+
+      const setToggleState = (preference) => {
+        if (systemIcon) systemIcon.classList.toggle('hidden', preference !== 'system');
+        if (lightIcon) lightIcon.classList.toggle('hidden', preference !== 'light');
+        if (darkIcon) darkIcon.classList.toggle('hidden', preference !== 'dark');
+
+        const label = preference === 'system'
+          ? 'System theme'
+          : preference === 'light'
+            ? 'Light theme'
+            : 'Dark theme';
+
+        if (themeButton) {
+          themeButton.setAttribute('aria-label', label);
+          themeButton.setAttribute('title', label);
+        }
+      };
+
+      const setPreference = (preference) => {
+        if (preference === 'light' || preference === 'dark') {
+          localStorage.setItem(storageKey, preference);
+        } else {
+          localStorage.removeItem(storageKey);
+        }
+        applyTheme(resolveTheme());
+        setToggleState(preference);
+        window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme: root.dataset.theme } }));
+      };
+
+      const onSystemThemeChange = () => {
+        if (!getStoredPreference()) {
+          applyTheme(resolveTheme());
+          setToggleState('system');
+          window.dispatchEvent(new CustomEvent('theme:change', { detail: { theme: root.dataset.theme } }));
+        }
+      };
+
+      if (typeof mediaQuery.addEventListener === 'function') {
+        mediaQuery.addEventListener('change', onSystemThemeChange);
+      } else if (typeof mediaQuery.addListener === 'function') {
+        mediaQuery.addListener(onSystemThemeChange);
+      }
+
+      const themeOrder = ['system', 'light', 'dark'];
+      const getNextPreference = () => {
+        const current = window.siteTheme?.getPreference?.() ?? 'system';
+        const nextIndex = (themeOrder.indexOf(current) + 1) % themeOrder.length;
+        return themeOrder[nextIndex];
+      };
+
+      if (!window.siteTheme) {
+        window.siteTheme = {
+          getTheme: () => root.dataset.theme || resolveTheme(),
+          getPreference: () => getStoredPreference() ?? 'system',
+          setPreference,
+          toggleTheme: () => setPreference(getNextPreference()),
+        };
+      }
+
+      applyTheme(resolveTheme());
+      setToggleState(window.siteTheme?.getPreference?.() ?? 'system');
+
+      if (themeButton instanceof HTMLElement) {
+        themeButton.addEventListener('click', () => {
+          const next = getNextPreference();
+          window.siteTheme?.setPreference?.(next);
+        });
       }
     })();
   </script>
